@@ -1,0 +1,131 @@
+<project>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!--Define the "maven coordinates" of this module"-->
+	<groupId>com.cliffberg.devopsforagilecoaches</groupId>
+	<artifactId>hello</artifactId>
+	<version>1.0</version>
+	<name>Hello World</name>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>main</module>
+		<module>features</module>
+	</modules>
+
+	<!--Define constants that we use below-->
+	<properties>
+		<maven.compiler.source>14</maven.compiler.source>
+		<maven.compiler.target>14</maven.compiler.target>
+		<maven.compiler.release>14</maven.compiler.release>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<sonar.jacoco.reportPath>${basedir}/main/target/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.jacoco.itReportPaths>${basedir}/main/target/jacoco.exec</sonar.jacoco.itReportPaths>
+	</properties>
+
+	<!--Identify where to look for third party components that we reference-->
+	<repositories>
+
+		<repository>
+			<id>central</id>
+			<name>Maven Repository Switchboard</name>
+			<layout>default</layout>
+			<url>https://repo1.maven.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
+	</repositories>
+
+	<!--Specify the third party components that we need, by giving their "Maven coordinates"-->
+	<!--Configure what happens during the build-->
+	<build>
+
+		<plugins> <!-- Plugins are the Maven components that actually do things.
+		 	Maven itself is really just a framework for retrieving dependencies and then
+			executing plugins. -->
+
+			<!-- JDK toolchain (where to find the compiler)-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-toolchains-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>   <!-- check -->
+						<goals>
+							<goal>toolchain</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<toolchains>
+						<jdk>
+							<version>${maven.compiler.source}</version> <!-- find the location of Java -->
+							<!--vendor>oracle</vendor-->
+						</jdk>
+					</toolchains>
+				</configuration>
+			</plugin>
+
+			<!--Compiler-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<executions>
+					<execution>
+						<id>compile-source</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<release>${maven.compiler.release}</release>
+					<compilerArguments>
+						<Xmaxerrs>5</Xmaxerrs> <!--Compiler stops after five errors found-->
+					</compilerArguments>
+				</configuration>
+			</plugin>
+
+			<!-- The next two plugins are for SonarQube. -->
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.7.0.1746</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.5</version>
+				<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report</id>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<destFile>${sonar.jacoco.reportPath}</destFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+</project>

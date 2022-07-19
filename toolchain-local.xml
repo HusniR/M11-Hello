@@ -1,0 +1,32 @@
+<toolchains xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/TOOLCHAINS/1.1.0 https://maven.apache.org/xsd/toolchains-1.1.0.xsd">
+
+	<!-- Java 13, OpenJDK -->
+	<toolchain>
+		<type>jdk</type>
+		<provides>
+			<version>13</version>
+			<id>jdk13</id>
+		</provides>
+		<configuration>
+			<!--Location of JAVA_HOME on the machine where compilation occurs-->
+			<jdkHome>/Library/Java/JavaVirtualMachines/jdk-13.0.1.jdk/Contents/Home</jdkHome>
+		</configuration>
+	</toolchain>
+
+	<!-- Java 12, from Oracle -->
+	<toolchain>
+		<type>jdk</type>
+		<provides>
+			<version>12</version>
+			<vendor>oracle</vendor>
+			<id>jdk12</id>
+		</provides>
+		<configuration>
+			<!--Location of JAVA_HOME on the machine where compilation occurs-->
+			<jdkHome>/Library/Java/JavaVirtualMachines/jdk-12.jdk/Contents/Home</jdkHome>
+		</configuration>
+	</toolchain>
+
+</toolchains>

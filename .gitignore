@@ -1,0 +1,10 @@
+**/*.class
+target
+env.mac
+.vagrant/
+scratch/
+*/dependency-reduced-pom.xml
+*.key
+**/*.key
+*.pem
+**/*.pem
